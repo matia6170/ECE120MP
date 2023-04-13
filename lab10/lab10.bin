@@ -6,3 +6,33 @@
 
 ; The program description and code starts here
 
+; R0 holds the starting address of the 10 number array.
+; R1 will store the counter. The counter will count up from -10 to 0 which is 10 steps. 
+; R2 store the temp value which is retrieved from number array in memeory
+; R3 is the output register. It will store the final value of the positive value sum.
+
+1110 000 000110001   ; 	x3100: R0 <- PC + SEXT(0 0011 0001)		Set R0 to the starting value of the array
+
+0101 001 001 1 00000 ;	x3101: R1 <- R1 AND SEXT(00000)  		Set all bits of R1 0
+1001 001 001 111111  ; 	x3102: R1 <- NOT(R1) 				Set all bits of R1 to 1
+0101 001 001 1 10110 ; 	x3103: R1 <- R1 AND SEXT(10110) 		Set R1 to -10 
+
+0101 011 011 1 00000 ;	x3104: R3 <- R3 AND SEXT(00000)  		Set all bits of R3 0
+
+0001 001 001 1 00001 ;	x3105: R1 <- R1 ADD SEXT(00001) 		{INCREMENT R1} R1++
+0000 001 000000110   ;	x3106: IF(p.P) THEN PC <- PC + x0006	  	check if R1 is positive. THen jump to{END} PC+6
+0110 010 000 000000  ; 	x3107: R2 <- M[BaseR + SEXT(PCoffset6)]		Load the M[R0] to R2 
+0000 001 000000010   ; 	x3108: IF(p.P) THEN PC <- PC + x0002		use BR Jump to {IF POSITIVE} if > 0 PC+2
+0001 000 000 1 00001 ;	x3109: R0 <- R0 ADD SEXT(00001) 		{INCREMENT R0} R0++ select the next number
+0100 1 11111111010   ; 	x310A: PC <- PC + xFFFA				Jump to {INCREMENT R1} PC-6
+
+; {IF POSITIVE}
+0001 011 011 000 010 ; 	x310B: R3 <- R3 ADD R2				Add R2 to R3
+0100 1 11111111100   ; 	x310C: PC <- PC + xFFFC				jump back to {INCREMENT R0} PC-4 
+
+;x310D {END}
+
+
+
+
+
