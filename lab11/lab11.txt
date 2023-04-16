@@ -1,6 +1,25 @@
 Question 1: Describe the errors that occur when trying to assemble lab11.asm. Identify the cause of each error.
 
+I got the following errors while trying to assemble lab11.asm.
 
+ 14: illegal operands for missing opcode
+	.ORIG Pseudo Op was missing
+ 16: instruction appears before .ORIG
+	.ORIG Pseudo Op was missing
+ 17: constant outside of allowed range
+	trying to load with 16 bit address. While the opcode can only take 9.
+ 19: illegal operands for ADD
+	There was an extra comma which caused the illiegal operands error.
+ 30: constant outside of allowed range
+	trying to load with 16 bit address. While the opcode can only take 9.
+ 32: label OUTERLOOP has already appeared
+	The BRpz is wrong order, it should be reordered to BRzp
+ 42: no .END directive found
+	.END Psudo Op was missing
+
+After fixing these errors, I got this error.
+ 35: unknown label "xxxx"
+	This needs to be replaced by using the .FILL pseudo ops.
 
 Question 2: For each label in your code (with all bugs fixed), write down the corresponding memory location. 
 
