@@ -1,0 +1,16 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	CALCULATE         3003
+//	ROWLOOP           300C
+//	COLLOOP           300F
+//	BREAKP            3010
+//	PRINT             3013
+//	BLANK             301F
+//	SYMBOL            3020
+//	LETTER            3021
+//	TEST              3022
+//	FUCK              3023
+//	FONT_DATA         3024
+

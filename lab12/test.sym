@@ -1,0 +1,9 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	CALCULATE         3003
+//	LETTER            3008
+//	NUM               3009
+//	ASCII             300B
+
