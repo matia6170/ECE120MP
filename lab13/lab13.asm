@@ -1,7 +1,107 @@
-; The table below represents an 8x16 font.  For each 8-bit extended ASCII
-; character, the table uses 16 memory locations, each of which contains
-; 8 bits (the high 8 bits, for your convenience) marking pixels in the
-; line for that character.
+.ORIG x3000
+;IF NULLSTRING HALT
+			LDI R5, STRING
+			BRz ENDPROGRAM
+
+;Compute the lenght of the string
+			AND R5, R5, #0
+			ADD R5, R5, #0
+
+CALCLEN		ADD R5, R5, #1			
+
+			LD R4, STRING
+			ADD R4, R4, R5
+			LDR R4, R4, #0
+
+			BRnp CALCLEN
+
+;Calculate the starting address of each char and store it in the orignal string
+			ADD R1, R5, #-1
+
+CALCSTAOUT	AND R2, R2, #0
+			ADD R2, R2, #4
+			
+			LD R4, STRING
+			ADD R4, R4, R1
+			LDR R4, R4, #0
+
+			AND R3, R3, #0
+
+CALCSTAIN	ADD R3, R4, R4
+
+			ADD R4, R3, #0
+
+			ADD R2, R2, #-1	
+
+			BRp CALCSTAIN
+
+			LEA R6, FONT_DATA ;Selecting what to store
+			ADD R3, R3, R6 ;R6
+
+			LD R6, STRING	;Selecting where to store
+			ADD R6, R6, R1
+
+			STR R3, R6, #0	;M[R6] <- R3
+
+			ADD R1, R1, #-1
+
+			BRzp CALCSTAOUT
+;Loop
+			AND R1, R1, #0 ;may be able to delete this line if above functions correctly
+
+			AND R3, R3, #0
+
+LOADNEWL	LD R6, STRING	;STRING
+			ADD R6, R6, R3	;STRING + CHARCNT
+			LDR R6, R6, #0 	;M[STRING + CHARCNT]
+			ADD R6, R6, R1  ;M[STRING + CHARCNT] + ROWCNT
+brpnt			LDR R4, R6, #0	;M[M[STRING + CHARCNT] + ROWCNT]
+
+			AND R2, R2, #0
+			ADD R2, R2, #8
+
+PRINTLINE	LD R6, BLANK	; Choosing what to output
+			ADD R4, R4, #0
+			BRzp #1
+			ADD R6, R6, #1 
+			
+			LDR R0, R6, #0
+
+			OUT				;PRINT
+
+			ADD R4, R4, R4	;SHIFT LEFT
+
+			ADD R2, R2, #-1 ; DECREMENT R2
+
+			BRp PRINTLINE
+
+			ADD R3, R3, #1	;CHARCNT ++
+
+			ADD R6, R5, #0	;Prepare for branch
+			NOT R6, R6
+			ADD R6, R6, #1
+			ADD R6, R3, R6
+			
+			BRn LOADNEWL 	;LOADNEWLINE if (CHARCNT < LENGTH)
+
+			;Print new lines
+			AND R0, R0, #0
+            ADD R0, R0, #10; Printing Single line feed (x0A)
+			OUT
+
+			AND R3, R3, #0
+
+			ADD R1, R1, #1
+
+			ADD R6, R1, #-16
+
+			BRnz LOADNEWL
+
+ENDPROGRAM	HALT
+
+BLANK		.FILL	x5000
+SYMBOL		.FILL 	x5001
+STRING		.FILL	x5002
 
 FONT_DATA
 	.FILL	x0000
@@ -4100,3 +4200,5 @@ FONT_DATA
 	.FILL	x0000
 	.FILL	x0000
 	.FILL	x0000
+
+.END

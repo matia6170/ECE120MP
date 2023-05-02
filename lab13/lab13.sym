@@ -1,0 +1,16 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	CALCLEN           3004
+//	CALCSTAOUT        300A
+//	CALCSTAIN         3010
+//	LOADNEWL          301D
+//	brpnt             3021
+//	PRINTLINE         3024
+//	ENDPROGRAM        303A
+//	BLANK             303B
+//	SYMBOL            303C
+//	STRING            303D
+//	FONT_DATA         303E
+

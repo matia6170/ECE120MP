@@ -2,9 +2,9 @@
 
 	.ORIG	x5000
 	
-	.FILL	x2E
-	.FILL	x40
-	.STRINGZ "Harry! "
+	.FILL	x5F
+	.FILL	x3D
+	.STRINGZ "U of I?"
 
 	.END
 
